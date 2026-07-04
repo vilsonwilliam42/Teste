@@ -1,62 +1,83 @@
-public class ListaEncadeada {
-	
-	No inicio;
-	int tamanho;
-	
-	public ListaEncadeada() {
-		this.inicio = null;
-		this.tamanho = 0;
-	}
-	public void removerInicio() {
-	
-		if(inicio==null) return;
-		
-		inicio=inicio.proximo;
-	}
-	
-	public void adicionarInicio(int valor) {
-		No novo = new No(valor);
-		novo.proximo = inicio;
-		inicio = novo;
-		tamanho++;
-	}
-	public void adcionaFim(int valor){
-		No novo=new No(valor);
-		if(inicio==null) {
-			inicio=novo;
-		}else {
-			
-		}
-	}
-	public void removerFim() {
-	No aux=inicio.proximo;
-		if(aux==null) {
-			
-			
-		}else if(auxnull) {
-			
-		}
-		
-		
-		
-	}
-	public void imprimir() {
-		No aux = inicio;
-		while(aux!=null) {
-			System.out.print(aux.valor+" ");
-			aux = aux.proximo;			
-		}
-		System.out.println();
-	}
-	
+package poo;
 
-	
-	private class No{
-		int valor;
-		No proximo;
-		No(int valor){
-			this.valor = valor;
-			this.proximo = null;
+public class ListaEncadeada {
+    No cabeca;
+
+    public void adicionarInicio(int valor) {
+        No novo = new No(valor);
+        novo.proximo = cabeca;
+        cabeca = novo;
+    }
+
+    public void adicionarFim(int valor) {
+        No novo = new No(valor);
+        if (cabeca == null) {
+            cabeca = novo;
+            return;
+        }
+        No t = cabeca;
+        while (t.proximo != null) t = t.proximo;
+        t.proximo = novo;
+    }
+
+    public void imprimir() {
+        No t = cabeca;
+        while (t != null) {
+            System.out.print(t.valor + " -> ");
+            t = t.proximo;
+        }
+        System.out.println("null");
+    }
+   
+	public ListaEncadeada intercalar(ListaEncadeada outra) {
+		ListaEncadeada nova= new ListaEncadeada();
+		
+		No listaEncadeada=this.cabeca;
+		No outraListaEncadeada=outra.cabeca;
+		
+		while(listaEncadeada != null && outraListaEncadeada !=null) {
+			nova.adicionarFim(listaEncadeada.valor);
+			nova.adicionarFim(outraListaEncadeada.valor);
+			listaEncadeada=listaEncadeada.proximo;
+			outraListaEncadeada=outraListaEncadeada.proximo;
+			
 		}
+		return nova;
 	}
+
+	public static void main(String[] args) {
+		ListaEncadeada lista=new ListaEncadeada();
+		lista.adicionarInicio(20);
+		lista.adicionarInicio(30);
+		lista.adicionarInicio(40);
+		lista.adicionarInicio(30);
+		
+		lista.adicionarFim(23);
+		lista.imprimir();
+		
+		
+		ListaEncadeada outra=new ListaEncadeada();
+		outra.adicionarInicio(70);
+		outra.adicionarInicio(80);
+		outra.adicionarInicio(90);
+		outra.adicionarInicio(50);
+		outra.adicionarInicio(100);
+		
+		outra.adicionarFim(60);
+		outra.imprimir();
+		
+		
+		ListaEncadeada intercalar=lista.intercalar(outra);
+		intercalar.imprimir();
+		
+		
+	}
+	
+    private static class No {
+        int valor;
+        No proximo;
+        public No(int valor) { this.valor = valor; }
+    }
+
 }
+
